@@ -3,10 +3,10 @@
     "name_pretty": "Dev Console",
     "namespace": "fridge",
     "version_number": "1.0.0",
-    "description": "Displays in the in-game UI if mods are enabled.",
+    "description": "Drop in replacement for dev console. WIP.",
     "dependencies": [],
     "incompatibilities": [],
     "authors": ["fridge"],
     "tags": ["ui"],
-    "description_rich": "It's a really cool mod that gives you infinite UI.\nAs a byproduct, it also gives infinite UI"
+    "description_rich": "It's a really cool mod that gives you infinite DEV CONSOLE.\nAs a byproduct, it also gives infinite crashes."
 }

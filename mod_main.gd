@@ -17,8 +17,6 @@ func init():
 
 			]
 		}
-	var velocity_display_override = load(path_to_dir+"/game_manager_override.gd")
-	velocity_display_override.take_over_path("res://scripts/game_manager.gd")
 
 	console_node.set_focus_mode(1)
 
@@ -61,16 +59,37 @@ func noclip(_args):
 	
 	return true
 
-var savedata = [0,Vector3(0,0,0),Vector3(0,0,0)] #Checkpoint, Position, Rotation, Blood Amount, GodBlood
-
+var savedata = [] 
 func savestate(_args):
 	# Saves current checkpoint of player and their position, orientation. Loads at the relevant datapoints.
-	# Ensure state is cleared on level change.
+	self.savedata = [
+		GameManager.current_checkpoint,
+		GameManager.get_player().position,
+		GameManager.get_player().rotation,
+		GameManager.get_player().blood_amount,
+		GameManager.get_player().god_blood_amount,
+		GameManager.get_player().velocity,
+		GameManager.get_player().current_state_name
+	]
+
+	# ATM state defaults to the do nothing state from the console, doesn't actually do anything
+
+	# TODO: Ensure state is cleared on level change.
 	pass
 
 func loadstate(_args):
 	#Calls set checkpoint + move to teleport player to desired position!
-	pass
+
+	if len(savedata) == 0:
+		return
+
+	GameManager.current_checkpoint = savedata[0]
+	GameManager.get_player().position = savedata[1]
+	GameManager.get_player().rotation = savedata[2]
+	GameManager.get_player().blood_amount = savedata[3]
+	GameManager.get_player().god_blood_amount = savedata[4]
+	GameManager.get_player().velocity = savedata[5]
+	GameManager.get_player().change_states(savedata[6].name,GameManager.get_player(),null)
 
 func infblood(_args):
 	GameManager.player.is_unlimited_blood_powerup_active = not GameManager.player.is_unlimited_blood_powerup_active
@@ -147,7 +166,9 @@ func help(_args):
 	"mv":move,
 	"setcpoint":set_checkpoint,
 	"c":set_checkpoint,
-	"help":help
+	"help":help,
+	"save":savestate,
+	"load":loadstate
 }"""))
 
 var valid_commands = {
@@ -163,7 +184,9 @@ var valid_commands = {
 	"mv":move,
 	"setcpoint":set_checkpoint,
 	"c":set_checkpoint,
-	"help":help
+	"help":help,
+	"save":savestate,
+	"load":loadstate
 }
 
 func set_time_scale(args):
