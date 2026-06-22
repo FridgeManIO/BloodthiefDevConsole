@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://doaltby064nne"]
+
+[sub_resource type="Gradient" id="Gradient_d3r5n"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kvn1d"]
+gradient = SubResource("Gradient_d3r5n")
+fill_from = Vector2(0.9695652, 0.9826087)
+fill_to = Vector2(1, 0.9956522)
+
+[node name="CustomConsole" type="Control" unique_id=2038205154]
+z_index = 1606
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=663911215]
+layout_mode = 0
+offset_top = 656.0
+offset_right = 200.0
+offset_bottom = 720.0
+texture = SubResource("GradientTexture2D_kvn1d")
+
+[node name="TextEdit" type="TextEdit" parent="." unique_id=1580829129]
+layout_mode = 0
+offset_top = 668.0
+offset_right = 192.0
+offset_bottom = 720.0
