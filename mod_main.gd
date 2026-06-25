@@ -109,7 +109,6 @@ func toggle_god_mode(_args):
 	return true
 
 func toggle_player_model(_args):
-	print("HIT!!")
 	GameManager.player.visible = not GameManager.player.visible 
 
 func toggle_hud(_args):
@@ -126,8 +125,6 @@ func toggle_hud(_args):
 		node.visible = hud_hidden
 	
 	hud_hidden = not hud_hidden
-
-# TODO: Toggle UI but keep console intact
 
 func kill(_args):
 	pass
@@ -201,9 +198,6 @@ var previous_state = GameManager.player.current_state_name
 func execute_command(text:String):
 	text = text.replace("\n","")
 	
-	for c in text:
-		print(c.unicode_at(0))
-	print("\n")
 	var command_array = text.split(" ")
 	
 	var command = ""
@@ -224,21 +218,29 @@ func execute_command(text:String):
 	if command in valid_commands.keys():
 		print(valid_commands.get(command).call(args))
 
+func query_attach_console():
+	if !is_instance_valid(GameManager.player):
+		return
+
+	var canvas := GameManager.player.get_node_or_null("CanvasLayer")
+	if canvas == null:
+		print("Player has no CanvasLayer.")
+		return
+
+	if canvas.has_node("CustomConsole"):
+		return
+
+	console_node = custom_console.instantiate()
+	GameManager.player.get_node("CanvasLayer").add_child(console_node)
+	console_node.visible = false
+	print("Console attached.")
 
 func _process(delta):
 
-	if is_instance_valid(GameManager.player) and not node_added:
-		GameManager.player.get_node("CanvasLayer").add_child(console_node)
-		console_node.visible = false
-		node_added = true
-
-	elif not is_instance_valid(GameManager.player) and node_added:
-		node_added = false
-		GameManager.player.get_node("CanvasLayer").remove_child(console_node)
-		return
+	query_attach_console()
 
 	if Input.is_key_pressed(KEY_QUOTELEFT):
-		if console_focus_just_pressed:
+		if console_focus_just_pressed: 
 			return
 		
 		console_enabled = not console_enabled
