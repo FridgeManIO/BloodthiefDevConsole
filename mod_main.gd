@@ -3,6 +3,9 @@ extends "res://addons/ModLoader/mod_node.gd"
 var custom_console = preload("custom_console.tscn")
 var console_node = custom_console.instantiate()
 
+var text_node_path = "CenterContainer/TextEdit"
+
+
 var resume_time_scale = 1.0
 var hud_hidden = false
 
@@ -220,24 +223,26 @@ func execute_command(text:String):
 
 func query_attach_console():
 	if !is_instance_valid(GameManager.player):
-		return
+		return false
 
 	var canvas := GameManager.player.get_node_or_null("CanvasLayer")
 	if canvas == null:
 		print("Player has no CanvasLayer.")
-		return
+		return false
 
 	if canvas.has_node("CustomConsole"):
-		return
+		return true
 
 	console_node = custom_console.instantiate()
 	GameManager.player.get_node("CanvasLayer").add_child(console_node)
 	console_node.visible = false
 	print("Console attached.")
+	return true
 
 func _process(delta):
 
-	query_attach_console()
+	if !query_attach_console():
+		return
 
 	if Input.is_key_pressed(KEY_QUOTELEFT):
 		if console_focus_just_pressed: 
@@ -250,31 +255,31 @@ func _process(delta):
 
 	if Input.is_key_pressed(KEY_ENTER):
 		if console_enabled:
-			execute_command(console_node.get_node("TextEdit").get_text())
+			execute_command(console_node.get_node(text_node_path).get_text())
 			console_enabled = false
 			console_focus_just_pressed = true
 
 	if console_enabled:
 		console_node.visible = true
 		GameManager.player.change_states(GameManager.player.do_nothing_state.name, GameManager.player)
-		console_node.get_node("TextEdit").grab_focus()
+		console_node.get_node(text_node_path).grab_focus()
 		Engine.time_scale = 0.0
 
 		if Input.is_action_just_pressed("menu_up"):
 
 			var prev_command = previous_commands.back()
 
-			console_node.get_node("TextEdit").set_text(prev_command)
-			console_node.get_node("TextEdit").set_caret_column(len(prev_command))
+			console_node.get_node(text_node_path).set_text(prev_command)
+			console_node.get_node(text_node_path).set_caret_column(len(prev_command))
 		elif Input.is_action_just_pressed("menu_down"):
-			console_node.get_node("TextEdit").set_text("")
+			console_node.get_node(text_node_path).set_text("")
 
 
 	elif not console_enabled and console_focus_just_pressed:
 		console_node.visible = false
 		if not in_freecam:
 			GameManager.player.change_states(GameManager.player.in_air_state.name, GameManager.player, null)
-		console_node.get_node("TextEdit").set_text("")
+		console_node.get_node(text_node_path).set_text("")
 		Engine.time_scale = resume_time_scale
 
 	else:

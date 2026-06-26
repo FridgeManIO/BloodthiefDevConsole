@@ -1,29 +1,57 @@
 [gd_scene format=3 uid="uid://doaltby064nne"]
 
+[ext_resource type="FontVariation" uid="uid://cgocipgy40jh8" path="res://fonts/slightly_small_alagard_unicode.tres" id="1_kvn1d"]
+
 [sub_resource type="Gradient" id="Gradient_d3r5n"]
+offsets = PackedFloat32Array(0, 0.754717, 0.8584906, 0.9150943)
+colors = PackedColorArray(0.41568628, 0.007843138, 0.101960786, 0.6627451, 0.7738622, 0.8317846, 0.9857523, 0.48235294, 0.7738622, 0.8317846, 0.9857523, 0.48235294, 0.7738622, 0.8317846, 0.9857523, 0.48235294)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_kvn1d"]
 gradient = SubResource("Gradient_d3r5n")
-fill_from = Vector2(0.9695652, 0.9826087)
-fill_to = Vector2(1, 0.9956522)
+width = 62
+fill_to = Vector2(0.3647059, 1)
+
+[sub_resource type="Gradient" id="Gradient_kvn1d"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_86gso"]
+gradient = SubResource("Gradient_kvn1d")
+fill_from = Vector2(1, 0)
 
 [node name="CustomConsole" type="Control" unique_id=2038205154]
 z_index = 1606
 z_as_relative = false
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=663911215]
-layout_mode = 0
-offset_top = 656.0
-offset_right = 200.0
-offset_bottom = 720.0
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1219842421]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer" unique_id=663911215]
+visible = false
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
 texture = SubResource("GradientTexture2D_kvn1d")
 
-[node name="TextEdit" type="TextEdit" parent="." unique_id=1580829129]
-layout_mode = 0
-offset_top = 668.0
-offset_right = 192.0
-offset_bottom = 720.0
+[node name="TextEdit" type="LineEdit" parent="CenterContainer" unique_id=1462297020]
+custom_minimum_size = Vector2(300, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.83480483, 0, 0.060669705, 1)
+theme_override_fonts/font = ExtResource("1_kvn1d")
+theme_override_font_sizes/font_size = 22
+alignment = 1
+context_menu_enabled = false
+
+[node name="background" type="Sprite2D" parent="CenterContainer/TextEdit" unique_id=934228027]
+z_index = -1
+position = Vector2(151.25, 18.499992)
+scale = Vector2(4.929688, 0.76562476)
+texture = SubResource("GradientTexture2D_86gso")
