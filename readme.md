@@ -1,6 +1,6 @@
 # Bloodthief Dev Console
 
-Very janky WIP dev console. Currently crashes if you load more than one level in a single session but this is going to be fixed, and this is nowhere near done atm. Use at your own risk! Very much a rush job, so expect many many issues due to the spaghetti contained in this repo.
+WIP dev console. Report any issues you have.
 
 ## How to use
 
