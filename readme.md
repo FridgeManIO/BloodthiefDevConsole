@@ -4,7 +4,7 @@ WIP dev console. Report any issues you have.
 
 ## How to use
 
-Press the backtick key on your keyboard (<b>`</b>) and type one of the commands in the below cheatsheet. If you want to replay previous command press the up arrow key.
+Press the backtick key on your keyboard (<b>`</b>) and type one of the commands from the cheatsheet below. If you want to replay previous command press the up arrow key.
 
 
 ## Docs(cheatsheet)
